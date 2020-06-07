@@ -21,11 +21,11 @@
         var upDuration = 11300; // up time milliseconds
 	var downDuration = 10300; // down time milliseconds
         var currentPosition = Position.UNKOWN;
-        const baseUrl = 'http://192.168.0.31:8081';
-
+        //const baseUrl = 'http://192.168.0.31:8081';
+	const baseUrl = location.href;
         // init function
         $(() => {
-            $.getJSON(baseUrl + '/position', (data, status, xhr) => {
+            $.getJSON(baseUrl + 'position', (data, status, xhr) => {
                 // get current position from server                
                 currentPosition = Number(data.currentPosition) == 100 ? Position.ON : Position.OFF;
                 // set toggle button accordingly
@@ -39,7 +39,7 @@
             })
 
             // fetch last log entries
-            $.getJSON(baseUrl + '/log/5', (data, status, xhr) => {
+            $.getJSON(baseUrl + 'log/5', (data, status, xhr) => {
                 data.log.forEach(element => {
                     if (element != "") $('#log').append($(`<li class="list-group-item">${element}</li>`));
                 });
@@ -53,14 +53,17 @@
             $('#toggle').bootstrapToggle('disable');
 
             var gpio_id;
+	    var duration;
             // send instructions to server
             if (currentPosition == Position.ON) {
                 currentPosition = Position.OFF;
                 gpio_id = 10;
+		duration = upDuration; 	
                 SendRequest(10, setProgressBarDown, () => { console.log("Green house is now closed"); });
             } else {
                 currentPosition = Position.ON;
                 gpio_id = 25;
+		var duration = downDuration; 	
                 SendRequest(25, setProgressBarUp, () => { console.log("Green house is now opened"); });
             }
             
@@ -75,7 +78,7 @@
         function SendRequest(gpio, progressCallback, onCompleted) {
             var xhttp = new XMLHttpRequest();
 	    var duration = gpio == 10 ? upDuration : downDuration; 	
-            xhttp.open('GET', baseUrl + '/move/' + gpio + '/' + duration, true);
+            xhttp.open('GET', baseUrl + 'move/' + gpio + '/' + duration, true);
             xhttp.onreadystatechange = (e) => {
                 if (xhttp.readyState === 4 && xhttp.status === 200) {
                     onCompleted();
@@ -89,7 +92,7 @@
 
 
         function setProgressBarUp() {
-            var max = duration;
+	    var max = upDuration; 	
             var current = 100;
             var target = $(".progress-bar");
 
@@ -107,12 +110,12 @@
 
         function setProgressBarDown() {
             var max = 0;
-            var current = duration;
+            var current = downDuration;
             var target = $(".progress-bar");
 
             var token = setInterval(() => {
                 current -= 100;
-                percent = current / duration * 100;
+                percent = current /downDuration * 100;
 
                 target.css("width", percent + "%");
                 target.attr("aria-valuenow", percent);
