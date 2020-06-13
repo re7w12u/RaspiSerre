@@ -30,10 +30,10 @@ def CheckTemperature(temp):
 	isClosed = GHM.GetDoorPosition() == GHM.Position.CLOSED
 	# it's getting warmer and it's still closed => open the greenhouse
 	if(temp > param.TemperatureTreshold and isClosed):
-		requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Open.GPIO, param.Open.Duration))
+		requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Open["GPIO"], param.Open["duration"]))
 	# it's getting colder and it's still opened => close the greenhouse
 	elif(temp < param.TemperatureTreshold and not isClosed):
-		requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Close.GPIO, param.Close.Duration))
+		requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Close["GPIO"], param.Close["duration"]))
 
 # get new measure from sensor
 def MakeNewMeasure():
