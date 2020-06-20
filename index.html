@@ -47,8 +47,7 @@
 
             // get temperature, humidity
             $.getJSON(baseUrl + 'am2302', (data, status, xhr) => {
-                var content = `Temperature=${data.temperature} °C | Humidity=${data.humidity} % | last check : ${data.time}`;
-                console.log(content);
+                var content = `Temperature=${data.temperature} °C | Humidity=${data.humidity} % | last check : ${data.time}`;                
                 $("#am2302").html(content);
             });
         });
@@ -64,13 +63,13 @@
             if (currentPosition == Position.ON) {
                 currentPosition = Position.OFF;
                 gpio_id = 10;
-		duration = upDuration; 	
-                SendRequest(10, setProgressBarDown, () => { console.log("Green house is now closed"); });
+		        //duration = upDuration; 	
+                SendRequest('close', setProgressBarDown, () => { console.log("Green house is now closed"); });
             } else {
                 currentPosition = Position.ON;
                 gpio_id = 25;
-		var duration = downDuration; 	
-                SendRequest(25, setProgressBarUp, () => { console.log("Green house is now opened"); });
+		        //var duration = downDuration; 	
+                SendRequest('open', setProgressBarUp, () => { console.log("Green house is now opened"); });
             }
             
             // update log
@@ -83,8 +82,9 @@
         // send request to server to control extend/rectract
         function SendRequest(gpio, progressCallback, onCompleted) {
             var xhttp = new XMLHttpRequest();
-	    var duration = gpio == 10 ? upDuration : downDuration; 	
-            xhttp.open('GET', baseUrl + 'move/' + gpio + '/' + duration, true);
+	        //var duration = gpio == 10 ? upDuration : downDuration;	
+            //xhttp.open('GET', baseUrl + 'move/' + gpio + '/' + duration, true);
+            xhttp.open('GET', baseUrl + 'move/' + gpio, true);
             xhttp.onreadystatechange = (e) => {
                 if (xhttp.readyState === 4 && xhttp.status === 200) {
                     onCompleted();

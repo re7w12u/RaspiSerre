@@ -3,6 +3,6 @@
 	"TemperatureDataFile" : "am2302.csv",
 	"ErrorFilePath" : "error.txt",
 	"PositionFile" : "position.txt",
-	"Open" : { "duration" : 10300, "GPIO" : 25},
-	"Close" : { "duration" : 11300, "GPIO" : 10}
+	"Close" : { "duration" : 11300, "GPIO" : 10, "position" : 0},
+	 "Open" : { "duration" : 10300, "GPIO" : 25, "position" : 100}
 }

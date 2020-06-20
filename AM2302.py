@@ -47,7 +47,7 @@ def SaveNewMeasure(hum, temp):
 	if hum is not None and temp is not None:
 		#print("Temp={0:0.1f}°C Humidity={1:0.1f}%".format(temp,hum))
 		with open(param.TemperatureDataFile,'a+') as f:
-			f.write('{0},{1},{2:0.1f},{3:0.1f}\r\n'.format(time.strftime('%d/%m/%y'), time.strftime('%H:%M'), temp, hum))
+			f.write('{0},{1},{2:0.1f},{3:0.1f}\r\n'.format(time.strftime('%d/%m/%y'), time.strftime('%H:%M:%S'), temp, hum))
 	else:
 		with open(param.ErrorFilePath,'a+') as f:
 			f.write('{0},{1},{2}\r\n'.format(time.strftime('%d/%m/%y'), time.strftime('%H:%M'), "Failed to retrieve data from humidity sensor"))
