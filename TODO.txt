@@ -1,2 +1,0 @@
- TODO
-- add origin (manual or am2302) for linear actuator open / close action

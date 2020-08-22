@@ -1,9 +1,0 @@
-[Unit]
-Description=AM2302 Temp and humidity Sensor timer
-
-[Timer]
-OnUnitActiveSec=5m
-OnStartupSec=15s
-
-[Install]
-WantedBy=timers.target
