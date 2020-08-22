@@ -48,11 +48,15 @@ function GetAM2302Data(){
 }
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(__dirname + "/pages/index.html");
 });
 
 app.get("/admin", (req, res) => {
-    res.sendFile(__dirname + "/admin/param.html");
+    res.sendFile(__dirname + "/pages/admin/param.html");
+});
+
+app.get("/menu", (req, res) => {
+    res.sendFile(__dirname + "/pages/menu.html");
 });
 
 app.post("/admin/params", (req, res)=>{
@@ -110,6 +114,8 @@ app.get("/debug/:gpio_id/:duration", (req, res) => {
          retract.writeSync(1);
          setTimeout(() => { retract.writeSync(0); }, duration);
      }
+
+     res.send("GPIO=" + gpio_id + " - Duration=" + duration);
 });
 
 app.get("/move/:action", (req, res) => {

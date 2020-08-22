@@ -12,60 +12,61 @@
     <script type="text/javascript" src="../jquery/jquery.min.js"></script>
     <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="../bootstrap4-toggle/js/bootstrap4-toggle.js"></script>
-
+    <script type="text/javascript" src="../w3data.js"></script>
 
     <script type="text/javascript">
 
-  
+
         //const baseUrl = 'http://192.168.0.31:8081';
-	    const baseUrl = location.href;
+        const baseUrl = location.href;
         // init function
         $(() => {
             $.getJSON(baseUrl + '/params', (data, status, xhr) => {
                 $("#closingTime").val(data.Close.duration);
                 $("#closingGPIO").val(data.Close.GPIO);
                 $("#openingTime").val(data.Open.duration);
-                $("#openingGPIO").val(data.Open.GPIO);                
-                $("#tempTreshold").val(data.TemperatureTreshold);                
-            })            
+                $("#openingGPIO").val(data.Open.GPIO);
+                $("#tempTreshold").val(data.TemperatureTreshold);
+            })
 
             $("#saveBtn").click(SaveParam);
             $("#restartServerBtn").click(RestartServerBtn);
             $("#restartTempSvcBtn").click(RestartTempSvcBtn);
 
-        });     
+            w3IncludeHTML();
+        });
 
-        function RestartServerBtn(){
+        function RestartServerBtn() {
             console.log("restarting web server");
         }
 
-        function RestartTempSvcBtn(){
+        function RestartTempSvcBtn() {
             console.log("restarting Temperature service");
         }
 
         function SaveParam() {
             var payLoad = {
-                closingTime : $("#closingTime").val(),
-                closingGPIO : $("#closingGPIO").val(),
-                openingTime : $("#openingTime").val(),
-                openingGPIO : $("#openingGPIO").val(),
-                tempTreshold : $("#tempTreshold").val()
+                closingTime: $("#closingTime").val(),
+                closingGPIO: $("#closingGPIO").val(),
+                openingTime: $("#openingTime").val(),
+                openingGPIO: $("#openingGPIO").val(),
+                tempTreshold: $("#tempTreshold").val()
             };
-                
+
             //$.post(baseUrl + '/params', payLoad, (data) =>{ console.log(data); }, "json");
 
             $.ajax
-            ({
-                type: "POST",
-                url: baseUrl + '/params',
-                dataType: 'json',
-                async: true,                
-                data: JSON.stringify(payLoad),
-                contentType: 'application/json',
-                success: function (r) {
-                console.log(r) ;
-                }
-            });
+                ({
+                    type: "POST",
+                    url: baseUrl + '/params',
+                    dataType: 'json',
+                    async: true,
+                    data: JSON.stringify(payLoad),
+                    contentType: 'application/json',
+                    success: function (r) {
+                        console.log(r);
+                    }
+                });
 
         }
 
@@ -74,7 +75,9 @@
 
 <body>
     <div class="container">
-        
+
+        <div w3-include-html="../menu"></div>
+
         <div class="row">
             <div class="col-sm">
                 <div class="card">
@@ -102,12 +105,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="tempTreshold">Temperature Treshold</label>
-                                <input type="number" class="form-control" id="tempTreshold"/>
-                            </div>     
-                            <div class="form-group">                                
+                                <input type="number" class="form-control" id="tempTreshold" />
+                            </div>
+                            <div class="form-group">
                                 <button type="button" class="btn btn-success" id="saveBtn">Save</button>
-                            </div>    
-                            
+                            </div>
+
                         </ul>
                     </div>
                 </div>
@@ -124,14 +127,16 @@
                         <h2 class="card-title">Services</h2>
 
                         <ul class="list-group" id="services">
-                           
-                            <div class="form-group">                                
-                                <button type="button" class="btn btn-warning" id="restartServerBtn">Restart web server</button>
-                            </div>    
-                            <div class="form-group">                                
-                                <button type="button" class="btn btn-warning" id="restartTempSvcBtn">Restart Temperature service</button>
-                            </div>    
-                            
+
+                            <div class="form-group">
+                                <button type="button" class="btn btn-warning" id="restartServerBtn">Restart web
+                                    server</button>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-warning" id="restartTempSvcBtn">Restart Temperature
+                                    service</button>
+                            </div>
+
                         </ul>
                     </div>
                 </div>

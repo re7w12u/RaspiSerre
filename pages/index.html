@@ -12,7 +12,7 @@
     <script type="text/javascript" src="jquery/jquery.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="bootstrap4-toggle/js/bootstrap4-toggle.js"></script>
-
+    <script type="text/javascript" src="w3data.js"></script>
 
     <script type="text/javascript">
 
@@ -25,6 +25,8 @@
 	    const baseUrl = location.href;
         // init function
         $(() => {
+            w3IncludeHTML();
+
             $.getJSON(baseUrl + 'position', (data, status, xhr) => {
                 // get current position from server                
                 currentPosition = Number(data.currentPosition) == 100 ? Position.ON : Position.OFF;
@@ -50,6 +52,7 @@
                 var content = `Temperature=${data.temperature} °C | Humidity=${data.humidity} % | last check : ${data.time}`;                
                 $("#am2302").html(content);
             });
+            
         });
 
         /// toggle event handler
@@ -136,6 +139,9 @@
 
 <body>
     <div class="container">
+
+        <div w3-include-html="../menu"></div>
+
         <div class="row">
             <div class="col-sm">
                 <div class="card">
