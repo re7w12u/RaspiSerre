@@ -11,6 +11,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "express": "^4.16.4",
-    "jquery": "^3.4.1"
+    "jquery": "^3.4.1",
+    "serve-favicon": "^2.5.0"
   }
 }

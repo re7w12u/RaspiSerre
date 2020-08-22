@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Syntax Error :: Green House</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Linear Actuator</title>
@@ -19,10 +19,10 @@
         var Position = Object.freeze({ "ON": 100, "OFF": 0, "UNKOWN": -1 });
 
         var upDuration = 11300; // up time milliseconds
-	var downDuration = 10300; // down time milliseconds
+	    var downDuration = 10300; // down time milliseconds
         var currentPosition = Position.UNKOWN;
         //const baseUrl = 'http://192.168.0.31:8081';
-	const baseUrl = location.href;
+	    const baseUrl = location.href;
         // init function
         $(() => {
             $.getJSON(baseUrl + 'position', (data, status, xhr) => {
@@ -45,6 +45,11 @@
                 });
             });
 
+            // get temperature, humidity
+            $.getJSON(baseUrl + 'am2302', (data, status, xhr) => {
+                var content = `Temperature=${data.temperature} °C | Humidity=${data.humidity} % | last check : ${data.time}`;                
+                $("#am2302").html(content);
+            });
         });
 
         /// toggle event handler
@@ -58,13 +63,13 @@
             if (currentPosition == Position.ON) {
                 currentPosition = Position.OFF;
                 gpio_id = 10;
-		duration = upDuration; 	
-                SendRequest(10, setProgressBarDown, () => { console.log("Green house is now closed"); });
+		        //duration = upDuration; 	
+                SendRequest('close', setProgressBarDown, () => { console.log("Green house is now closed"); });
             } else {
                 currentPosition = Position.ON;
                 gpio_id = 25;
-		var duration = downDuration; 	
-                SendRequest(25, setProgressBarUp, () => { console.log("Green house is now opened"); });
+		        //var duration = downDuration; 	
+                SendRequest('open', setProgressBarUp, () => { console.log("Green house is now opened"); });
             }
             
             // update log
@@ -77,8 +82,9 @@
         // send request to server to control extend/rectract
         function SendRequest(gpio, progressCallback, onCompleted) {
             var xhttp = new XMLHttpRequest();
-	    var duration = gpio == 10 ? upDuration : downDuration; 	
-            xhttp.open('GET', baseUrl + 'move/' + gpio + '/' + duration, true);
+	        //var duration = gpio == 10 ? upDuration : downDuration;	
+            //xhttp.open('GET', baseUrl + 'move/' + gpio + '/' + duration, true);
+            xhttp.open('GET', baseUrl + 'move/' + gpio, true);
             xhttp.onreadystatechange = (e) => {
                 if (xhttp.readyState === 4 && xhttp.status === 200) {
                     onCompleted();
@@ -134,6 +140,7 @@
             <div class="col-sm">
                 <div class="card">
                     <div class="card-body mx-auto">
+                        <p class="card-text" id="am2302"></p>
                         <input checked type="checkbox" data-on="Opened" data-off="Closed" data-toggle="toggle"
                             id="toggle" data-onstyle="success">
                     </div>
