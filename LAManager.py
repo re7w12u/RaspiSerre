@@ -1,5 +1,5 @@
 import sys
-import time
+from time import sleep
 import loadparam
 import RPi.GPIO as GPIO
 from LogManager import LogManager
@@ -18,6 +18,9 @@ class LAManager():
         GPIO.setup(self.__param.Open["GPIO"], GPIO.OUT)
         GPIO.setup(self.__param.Close["GPIO"], GPIO.OUT)
 
+        GPIO.output(self.__param.Open["GPIO"],GPIO.LOW) 
+        GPIO.output(self.__param.Close["GPIO"],GPIO.LOW) 
+
 
     def Open(self):
         self.__Move(self.__param.Open)
@@ -31,9 +34,10 @@ class LAManager():
         try :
             with open(self.__param.PositionFile,'r+') as f:
                 f.seek(0)
-                f.write(pos)
-        except :
+                f.write(str(pos))
+        except Exception as e:
             self.__logger.Err("something bad just happened while trying to save position in position.txt")
+            self.__logger.Err(e)
 
 
     def __Move(self, param):
@@ -42,19 +46,32 @@ class LAManager():
             duration = param["duration"]
             pos = param["position"]
 
+            # GPIO.setmode(GPIO.BCM)
+            # print("GPIO={0}".format(GPIO.BCM))
+            # GPIO.setwarnings(False)
+
+            #GPIO.setup(self.__param.Open["GPIO"], GPIO.OUT)
+            #GPIO.setup(self.__param.Close["GPIO"], GPIO.OUT)
+            #print("OPEN={0} CLOSE={1}".format(self.__param.Open["GPIO"],self.__param.Close["GPIO"]))
+
+
+            
+            print("mode={0}".format(GPIO.getmode()))            
             print("gpio {0} for {1} ms".format(gpio, duration))
             print("value={0}".format(GPIO.input(gpio)))
             GPIO.output(gpio,GPIO.HIGH)
-            print("set to HIGH - sleeping...")
-            time.sleep(duration / 1000)
+            print("set to HIGH - sleeping...")            
+            sleep(int(duration) / 1000)
             print("waking up...")
             GPIO.output(gpio,GPIO.LOW)        
             print("set to LOW - done.")
 
             self.SavePosition(pos)
             self.__logger.Log("switching gpio {0} for {1} ms".format(gpio, duration))
-        except:
-            self.__logger.Err("error while moving linear actuator gpio={0} duration={1} ms".format(gpio, duration))
+        except Exception as e:
+            print(e)
+            self.__logger.Err("error while moving linear actuator gpio={0} duration={1} ms - see error below for more info".format(gpio, duration))
+            self.__logger.Err(e)
         finally:
             GPIO.cleanup()
 

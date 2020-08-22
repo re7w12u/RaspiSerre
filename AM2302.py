@@ -30,14 +30,19 @@ def CheckSensor():
 def CheckGreenHouseTemperature(temp):
 	isClosed = GHM.GetDoorPosition() == GHM.Position.CLOSED
 	# it's getting warmer and it's still closed => open the greenhouse
-	if(temp > float(param.TemperatureTreshold) and isClosed):
-		#requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Open["GPIO"], param.Open["duration"]))
-	 	lam = LAManager.LAManager()
+	print("isClosed={0}".format(isClosed))
+	print("temp={0} (type={1})".format(temp,type(temp)))
+	print("treshold={0}".format(param.TemperatureTreshold))
+	if(temp > float(param.TemperatureTreshold) and isClosed):		
+	#requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Open["GPIO"], param.Open["duration"]))
+		print("open")
+		lam = LAManager.LAManager()
 		lam.Open()
 		
 	# it's getting colder and it's still opened => close the greenhouse
 	elif(temp < float(param.TemperatureTreshold) and not isClosed):
 		#requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Close["GPIO"], param.Close["duration"]))
+		print("close")
 		lam = LAManager.LAManager()
 		lam.Close()
 

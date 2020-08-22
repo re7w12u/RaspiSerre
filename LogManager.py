@@ -27,7 +27,7 @@ class LogManager:
 
     def __Write(self, msg, level):
         with open(self.__param.ErrorFilePath, 'a') as f: 
-            f.write(msg)
+            f.write('{0}\n'.format(msg))
 
     def __GetDate(self):
         return '{0} {1}'.format(date.today().strftime('%d/%m/%Y'), time.strftime('%H:%M:%S'))
