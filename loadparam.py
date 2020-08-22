@@ -14,10 +14,13 @@ class Param(object):
 
 
 
+<<<<<<< HEAD
 	def Save(self, p):
 		pass
 
 
 
+=======
+>>>>>>> b5bad87a72bc654c73c7fe1ab9cc9ada9751aab0
 
 
