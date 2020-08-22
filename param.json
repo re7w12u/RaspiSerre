@@ -1,0 +1,12 @@
+<<<<<<< HEAD
+{"TemperatureTreshold":"25","TemperatureDataFile":"am2302.csv","ErrorFilePath":"error.txt","PositionFile":"position.txt","Close":{"duration":"11300","GPIO":10,"position":0},"Open":{"duration":"10300","GPIO":25,"position":100}}
+=======
+{
+	"TemperatureTreshold" :  25,
+	"TemperatureDataFile" : "am2302.csv",
+	"ErrorFilePath" : "error.txt",
+	"PositionFile" : "position.txt",
+	"Close" : { "duration" : 11300, "GPIO" : 10, "position" : 0},
+	 "Open" : { "duration" : 10300, "GPIO" : 25, "position" : 100}
+}
+>>>>>>> b5bad87a72bc654c73c7fe1ab9cc9ada9751aab0
