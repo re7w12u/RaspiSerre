@@ -99,8 +99,9 @@ app.get("/am2302", (req, res) => {
 });
 
 app.get("/position", (req, res) => {    
+    data = fs.readFileSync(__dirname + "/position.txt",   {encoding:'utf8', flag:'r'});
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ currentPosition: currentPosition }));
+    res.send(JSON.stringify({ currentPosition: data }));
 });
 
 app.get("/debug/:gpio_id/:duration", (req, res) => {

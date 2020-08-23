@@ -9,10 +9,11 @@ import LAManager
 
 DHT_SENSOR = Adafruit_DHT.AM2302
 DHT_PIN = 4
-param = loadparam.Param()
+
 
 # pull latest measure from csv file
 def GetLatestMeasure():
+	param = loadparam.Param()
 	with open(param.TemperatureDataFile) as f:
 		return f.readlines()[-1]
 
@@ -28,6 +29,7 @@ def CheckSensor():
 
 # check temperature to keep green house not too warm, not too cold
 def CheckGreenHouseTemperature(temp):
+	param = loadparam.Param()
 	isClosed = GHM.GetDoorPosition() == GHM.Position.CLOSED
 	# it's getting warmer and it's still closed => open the greenhouse
 	print("isClosed={0}".format(isClosed))
@@ -55,6 +57,7 @@ def MakeNewMeasure():
 
 # save data to csv file
 def SaveNewMeasure(hum, temp):
+	param = loadparam.Param()
 	#print("Temp={0:0.1f}C Humidity={1:0.1f}%".format(temp,hum))
 	with open(param.TemperatureDataFile,'a+') as f:
 		f.write('{0},{1},{2:0.1f},{3:0.1f}\r\n'.format(time.strftime('%d/%m/%y'), time.strftime('%H:%M:%S'), temp, hum))
