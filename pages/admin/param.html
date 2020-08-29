@@ -12,7 +12,7 @@
     <script type="text/javascript" src="../jquery/jquery.min.js"></script>
     <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="../bootstrap4-toggle/js/bootstrap4-toggle.js"></script>
-    <script type="text/javascript" src="../w3data.js"></script>
+    <script type="text/javascript" src="../menu.js"></script>
 
     <script type="text/javascript">
 
@@ -33,7 +33,7 @@
             $("#restartServerBtn").click(RestartServerBtn);
             $("#restartTempSvcBtn").click(RestartTempSvcBtn);
 
-            w3IncludeHTML();
+            //w3IncludeHTML();
         });
 
         function RestartServerBtn() {
@@ -76,8 +76,9 @@
 <body>
     <div class="container">
 
-        <div w3-include-html="../menu"></div>
-
+        <!-- <div w3-include-html="../menu"></div> -->
+        <div id="menuPlaceHolder"></div>
+        
         <div class="row">
             <div class="col-sm">
                 <div class="card">
@@ -92,7 +93,7 @@
                                 <input type="number" class="form-control" id="closingTime" />
                             </div>
                             <div class="form-group">
-                                <label for="closingGPIO">Closing GPIO (ms)</label>
+                                <label for="closingGPIO">Closing GPIO port number</label>
                                 <input type="number" class="form-control" id="closingGPIO" />
                             </div>
                             <div class="form-group">
@@ -100,7 +101,7 @@
                                 <input type="number" class="form-control" id="openingTime" />
                             </div>
                             <div class="form-group">
-                                <label for="openingGPIO">Opening GPIO (ms)</label>
+                                <label for="openingGPIO">Opening GPIO port number</label>
                                 <input type="number" class="form-control" id="openingGPIO" />
                             </div>
                             <div class="form-group">

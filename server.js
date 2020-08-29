@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/pages/index.html");
 });
 
-app.get("/admin", (req, res) => {
+app.get("/param", (req, res) => {
     res.sendFile(__dirname + "/pages/admin/param.html");
 });
 
