@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/opt/linear-actuator
-ExecStart=/usr/bin/npm start
+ExecStart=/opt/linear-actuator/services/start-server.sh
 Restart=always
 User=pi
 Environment=PORT=8081

@@ -5,11 +5,13 @@ import loadparam
 import GHManager as GHM
 import requests
 import LAManager
+import LogManager
 
 
 DHT_SENSOR = Adafruit_DHT.AM2302
 DHT_PIN = 4
-
+Logger = LogManager.LogManager()
+CODE_ERROR = "1x"
 
 # pull latest measure from csv file
 def GetLatestMeasure():
@@ -24,29 +26,23 @@ def CheckSensor():
 		SaveNewMeasure(temp, hum)
 		CheckGreenHouseTemperature(temp)
 	except Exception as e:
-		with open(param.ErrorFilePath,'a+') as f:
-			f.write('{0} - {1} - {2}\r\n'.format(time.strftime('%d/%m/%y'), time.strftime('%H:%M:%S') ,str(e)))
+		Logger.Err(str(e), CODE_ERROR + '1')
 
 # check temperature to keep green house not too warm, not too cold
 def CheckGreenHouseTemperature(temp):
 	param = loadparam.Param()
 	isClosed = GHM.GetDoorPosition() == GHM.Position.CLOSED
 	# it's getting warmer and it's still closed => open the greenhouse
-	print("isClosed={0}".format(isClosed))
-	print("temp={0} (type={1})".format(temp,type(temp)))
-	print("treshold={0}".format(param.TemperatureTreshold))
 	if(temp > float(param.TemperatureTreshold) and isClosed):		
-	#requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Open["GPIO"], param.Open["duration"]))
-		print("open")
 		lam = LAManager.LAManager()
 		lam.Open()
+		Logger.Log('temp ({0}) is higher than treshold ({1}) => opening greenhouse now'.format(temp, param.TemperatureTreshold))
 		
 	# it's getting colder and it's still opened => close the greenhouse
 	elif(temp < float(param.TemperatureTreshold) and not isClosed):
-		#requests.get('http://localhost:8081/move/{0}/{1}'.format(param.Close["GPIO"], param.Close["duration"]))
-		print("close")
 		lam = LAManager.LAManager()
 		lam.Close()
+		Logger.Log('temp ({0}) is lower than treshold ({1}) => closing greenhouse now'.format(temp, param.TemperatureTreshold))
 
 # get new measure from sensor
 def MakeNewMeasure():
@@ -57,8 +53,7 @@ def MakeNewMeasure():
 
 # save data to csv file
 def SaveNewMeasure(hum, temp):
-	param = loadparam.Param()
-	#print("Temp={0:0.1f}C Humidity={1:0.1f}%".format(temp,hum))
+	param = loadparam.Param()	
 	with open(param.TemperatureDataFile,'a+') as f:
 		f.write('{0},{1},{2:0.1f},{3:0.1f}\r\n'.format(time.strftime('%d/%m/%y'), time.strftime('%H:%M:%S'), temp, hum))
 

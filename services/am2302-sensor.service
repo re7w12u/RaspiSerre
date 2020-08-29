@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 WorkingDirectory=/opt/linear-actuator
-ExecStart=/usr/bin/python3 /opt/linear-actuator/am2302SvcProxy.py
-Restart=always
+ExecStart=/usr/bin/python3 /opt/linear-actuator/python/am2302SvcProxy.py
+Restart=no
 User=pi
 
 [Install]

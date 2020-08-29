@@ -1,8 +1,11 @@
-copy *.service and *.timer to /etc/systemd/system
+#instructions on how to deploy services
 
-then 
-sudo systemctl enable xxxx.service
-sudo systemctl start xxxx.service
+> copy *.service and *.timer to /etc/systemd/system
 
-sudo systemctl enable xxxx.timer
-sudo systemctl start xxxx.timer
+#then 
+
+> sudo systemctl enable linear-actuator.service
+> sudo systemctl start linear-actuator.service
+
+> sudo systemctl enable am2302-sensor.timer
+> sudo systemctl start am2302-sensor.timer

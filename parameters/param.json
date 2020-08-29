@@ -1,0 +1,9 @@
+{
+	"TemperatureTreshold" :  25,
+	"TemperatureDataFile" : "output/am2302.csv",
+	"OutputFilePath" : "output/output.txt",
+	"PositionFile" : "parameters/position.txt",
+	"LAManagerFile" : "./python/LAManager.py",
+	"Close" : { "duration" : 11300, "GPIO" : 10, "position" : 0},
+	 "Open" : { "duration" : 10300, "GPIO" : 25, "position" : 100}
+}

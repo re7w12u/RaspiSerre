@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,10 +14,7 @@
     "deferred": "^0.7.11",
     "express": "^4.16.4",
     "jquery": "^3.4.1",
-<<<<<<< HEAD
-    "serve-favicon": "^2.5.0"
-=======
+    "serve-favicon": "^2.5.0",
     "onoff": "^6.0.0"
->>>>>>> b5bad87a72bc654c73c7fe1ab9cc9ada9751aab0
   }
 }
