@@ -2,7 +2,7 @@
 
 //var express = require("express");
 import express from 'express';
-import routers from './routers.js';
+import routers from './routers.mjs';
 import { URL } from 'url';
 import pkg from 'onoff';
 import dPkg from 'deferred';
